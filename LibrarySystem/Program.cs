@@ -7,6 +7,5 @@ internal class Program
     static void Main(string[] args)
     {
         CreateMenu();
-        string point = GetPoint();
     }
 }

@@ -6,5 +6,5 @@ public class Reader(int id, string name)
 
     public string Name { get; set; } = name;
 
-    public IEnumerable<Book> BorrowedBooks { get; set; } = new List<Book>();
+    public List<Book> BorrowedBooks { get; set; } = new List<Book>();
 }

@@ -1,4 +1,6 @@
-﻿using LibrarySystem.Main_Classes;
+﻿using LibrarySystem.Checks;
+using LibrarySystem.Convertor;
+using LibrarySystem.Main_Classes;
 
 namespace LibrarySystem.Menu;
 
@@ -18,14 +20,12 @@ public static class ConsoleMenu
         Console.WriteLine("8. Поиск читателя");
         Console.WriteLine("9. Просроченные книги");
         Console.WriteLine("0. Выход");
-        
-        string? point = Console.ReadLine();
+        GetPoint();
+    }
 
-        if (point == null || point == "" || point.Length > 1)
-        {
-            Console.WriteLine("Выберете пункт!!!");
-            CreateMenu();
-        }
+    public static void GetPoint()
+    {
+        string? point = Convertors.GetUserPoint();
 
         switch (char.Parse(point))
         {
@@ -64,17 +64,5 @@ public static class ConsoleMenu
                 Environment.Exit(0);
                 break;
         }
-    }
-
-    public static string GetPoint()
-    {
-        string? point = Console.ReadLine();
-
-        if (point == null || point == "" || point.Length > 1)
-        {
-            Console.WriteLine("Выберете пункт!!!");
-            return GetPoint();
-        }
-        return point;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using LibrarySystem.Checks;
+using LibrarySystem.Convertor;
 using static LibrarySystem.Menu.ConsoleMenu;
 
 namespace LibrarySystem.Main_Classes;
@@ -13,13 +14,13 @@ public static class Library
     {
         Console.Clear();
         Console.WriteLine("Id Книги?");
-        int id = Convert.ToInt32(Console.ReadLine());
+        int id = Convertors.GetUserChoice();
 
         Console.WriteLine("Название книги ");
-        string? title = Console.ReadLine();
+        string title = Convertors.GetUserString();
 
         Console.WriteLine("Имя автора?");
-        string? author = Console.ReadLine();
+        string author = Convertors.GetUserString();
         var book = new Book(id, title, author);
 
         _books.Add(book);        
@@ -29,10 +30,10 @@ public static class Library
     {
         Console.Clear();
         Console.WriteLine("Id Читателя?");
-        int id = Convert.ToInt32(Console.ReadLine());
+        int id = Convertors.GetUserChoice();
 
         Console.WriteLine("Имя читателя?");
-        string? name = Console.ReadLine();
+        string name = Convertors.GetUserString();
         var reader = new Reader(id, name);
 
         _readers.Add(reader);        
@@ -41,7 +42,6 @@ public static class Library
     public static void BorrowBook()
     {
         Console.Clear();
-
         Console.WriteLine("Id книги?");
         int idBook = Check.CheckIdBook(_books);
         var book = _books
@@ -54,10 +54,10 @@ public static class Library
 
         Check.CheckHistory(_history, idBook);
         Console.WriteLine("На сколько дней?");
-        int days = Convert.ToInt32(Console.ReadLine());
+        int days = Convertors.GetUserChoice();
         var borrow = new BorrowHistory(idBook, idReader, days, false);
 
-        reader.BorrowedBooks.Add(book);
+        reader!.BorrowedBooks.Add(book!);
         _history.Add(borrow);
         Console.WriteLine("Книга успешно выдана");
         Console.ReadKey();
@@ -67,7 +67,6 @@ public static class Library
     public static void ReturnBook()
     {
         Console.Clear();
-
         Console.WriteLine("Id книги?");
         int idBook = Check.CheckIdBook(_books);
         var book = _books
@@ -75,7 +74,8 @@ public static class Library
 
         Console.WriteLine("Id читателя?");
         int idReader = Check.CheckIdReader(_readers);
-        var reader = _readers.Find(reader => reader.Id == idReader);
+        var reader = _readers
+            .Find(reader => reader.Id == idReader);
 
         Check.CheckOfIssue(_history, idBook);
 
@@ -86,7 +86,7 @@ public static class Library
                 log.IsReturned = true;
                 reader!.BorrowedBooks.Remove(book!);
                 Console.WriteLine("Книга возвращена");
-                Console.ReadLine();
+                Console.ReadKey();
             }
         }
     }
@@ -95,7 +95,7 @@ public static class Library
     {
         Console.Clear();
         Check.CheckEmptyBookList(_books);
-        Console.ReadLine();
+        Console.ReadKey();
         CreateMenu();
     }
 
@@ -110,11 +110,9 @@ public static class Library
     public static void SearchBook()
     {
         Console.Clear();
-        Console.WriteLine("Введите название книги или автора книги: ");
-        string? query = Console.ReadLine();
-        
-        Check.CheckAvailabilityBook(_books, query);
-        Console.ReadLine();
+        Console.WriteLine("Введите название книги или автора книги: ");        
+        Check.CheckAvailabilityBook(_books, Convertors.GetUserString());
+        Console.ReadKey();
         CreateMenu();
     }
 
@@ -122,11 +120,7 @@ public static class Library
     {
         Console.Clear();
         Console.WriteLine("Введите имя читатея: ");
-        string? query = Console.ReadLine();
-
-        Check.CheckAvailabilityReader(_readers, query);
-        Console.ReadLine();
-        CreateMenu();
+        Check.CheckAvailabilityReader(_readers, Convertors.GetUserString());        
     }
 
     public static void GetOverdueBooks()
