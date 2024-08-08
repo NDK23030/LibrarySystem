@@ -37,7 +37,7 @@ internal static class Convertors
             {
                 string console = Console.ReadLine();
 
-                if (String.IsNullOrEmpty(console))
+                if (String.IsNullOrWhiteSpace(console))
                 {
                     throw new ArgumentException("Не может быть пустой строки!");
                 }
@@ -60,7 +60,7 @@ internal static class Convertors
             {
                 string console = Console.ReadLine()!;
 
-                if (String.IsNullOrEmpty(console) || console!.Length > 1)
+                if (String.IsNullOrWhiteSpace(console) || console!.Length > 1)
                 {
                     throw new ArgumentException("Выберите пункт меню!");
                 }
